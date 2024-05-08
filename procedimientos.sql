@@ -11,8 +11,44 @@ SHOW PROCEDURE STATUS WHERE Db = 'Taquilla_virtual';
 DELIMITER //
 CREATE PROCEDURE restringir_usuarios()
 BEGIN
-    SELECT 
-END //
+    -- Declaración de variables para almacenar los valores recuperados de las consultas
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE espectaculo_genero VARCHAR(50);
+    DECLARE usuario_tipo ENUM('Infantil', 'Jubilado', 'Adulto', 'Parado');
+    -- Declaración de un cursor para iterar sobre las ofertas y usuarios
+    DECLARE cur CURSOR FOR 
+        SELECT Genero, OfertaUsuarioTipo, Numero_Visa, Titulo, Tipo, Productor
+        FROM Espectaculo e
+        JOIN Pertenecen p ON e.Titulo = p.R_EspectaculoTitulo AND e.Tipo = p.R_EspectaculoTipo AND e.Productor = p.R_EspectaculoProductor
+        JOIN Cliente c ON p.OfertaUsuarioTipo = c.tipo;
+    -- Declaración del manejador de eventos para el cursor
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    OPEN cur;
+
+    read_loop: LOOP
+        FETCH cur INTO espectaculo_genero, usuario_tipo, @numero_visa, @titulo_espectaculo, @tipo_espectaculo, @productor_espectaculo;
+        -- Si no hay más filas, salir del bucle
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        -- Verificación de las restricciones de género
+        IF (espectaculo_genero = 'No_infantil' AND usuario_tipo = 'Infantil') OR
+           (espectaculo_genero = 'No_jubilado' AND usuario_tipo = 'Jubilado') THEN
+            -- Si se viola una restricción, lanzar un error y mostrar la información relevante
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = CONCAT(  'Error: Usuario con tipo ', usuario_tipo,
+                                        ' no permitido para el espectáculo ', @titulo_espectaculo,
+                                        ' de tipo ', @tipo_espectaculo,
+                                        ' y productor ', @productor_espectaculo,'.');
+            -- Imprimir la tupla del cliente y el espectáculo que no cumple con las restricciones
+            SELECT @numero_visa AS Numero_Visa, @titulo_espectaculo AS Titulo_Espectaculo, @tipo_espectaculo AS Tipo_Espectaculo, @productor_espectaculo AS Productor_Espectaculo;
+        END IF;
+    END LOOP;
+
+    CLOSE cur;
+END; //
 DELIMITER ;
 
 CALL restringir_usuarios();
