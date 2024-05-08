@@ -75,10 +75,17 @@ CALL limitar_usuarios()
 
 -- [6] Solo vender entradas de eventos abiertos
 DELIMITER //
-CREATE PROCEDURE vender_entrada()   
+
+CREATE PROCEDURE eliminar_ofertas_recintos_cerrados_finalizados()
 BEGIN
-    SELECT
+    -- Eliminar ofertas para recintos cerrados o finalizados
+    DELETE FROM Pertenecen
+    WHERE (R_RecintoFecha < NOW() AND Realiza.Estado = 'Finalizado')
+        OR (Realiza.Estado = 'Cerrado');
+    
+    SELECT 'Ofertas eliminadas para recintos cerrados o finalizados.';
 END //
+
 DELIMITER ;
 
 CALL vender_entrada()
