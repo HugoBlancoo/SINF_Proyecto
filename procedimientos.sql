@@ -44,6 +44,8 @@ BEGIN
                                         ' y productor ', @productor_espectaculo,'.');
             -- Imprimir la tupla del cliente y el espectáculo que no cumple con las restricciones
             SELECT @numero_visa AS Numero_Visa, @titulo_espectaculo AS Titulo_Espectaculo, @tipo_espectaculo AS Tipo_Espectaculo, @productor_espectaculo AS Productor_Espectaculo;
+            -- Aquí se elimina la tupla que no cumple con las restricciones
+            DELETE FROM Pertenecen WHERE Numero_Visa = @numero_visa AND R_EspectaculoTitulo = @titulo_espectaculo AND R_EspectaculoTipo = @tipo_espectaculo AND R_EspectaculoProductor = @productor_espectaculo;
         END IF;
     END LOOP;
 
