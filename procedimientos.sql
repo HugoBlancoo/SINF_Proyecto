@@ -56,13 +56,62 @@ DELIMITER ;
 CALL restringir_usuarios();
 
 -- [4] Que no superen los aforos establecidos
-DELIMITER restringir_aforo()//
-CREATE PROCEDURE 
-BEGIN
-    SELECT
-END //
-DELIMITER ;
+DELIMITER //
 
+CREATE PROCEDURE restringir_aforo()
+BEGIN
+    DECLARE recinto_nombre VARCHAR(50);
+    DECLARE recinto_fecha TIMESTAMP;
+    DECLARE num_max_localidades INT;
+    DECLARE num_localidades_actuales INT;
+    DECLARE num_localidades_a_eliminar INT;
+    
+    -- Cursor para obtener todos los recintos
+    DECLARE recinto_cursor CURSOR FOR
+        SELECT Nombre, Fecha, NumMax
+        FROM Recinto;
+    
+    -- Variables para manejar el cursor
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    -- Abrir el cursor
+    OPEN recinto_cursor;
+
+    -- Iniciar bucle para recorrer todos los recintos
+    recinto_loop: LOOP
+        FETCH recinto_cursor INTO recinto_nombre, recinto_fecha, num_max_localidades;
+        
+        -- Verificar si se han recuperado todos los registros
+        IF done THEN
+            LEAVE recinto_loop;
+        END IF;
+
+        -- Obtener el número actual de localidades para el recinto
+        SELECT COUNT(*) INTO num_localidades_actuales
+        FROM Pertenecen
+        WHERE R_RecintoNombre = recinto_nombre
+            AND R_RecintoFecha = recinto_fecha;
+
+        -- Calcular cuántas localidades eliminar para cumplir con el máximo
+        IF num_localidades_actuales > num_max_localidades THEN
+            SET num_localidades_a_eliminar = num_localidades_actuales - num_max_localidades;
+            
+            -- Eliminar las localidades adicionales
+            DELETE FROM Pertenecen
+            WHERE R_RecintoNombre = recinto_nombre
+                AND R_RecintoFecha = recinto_fecha
+            ORDER BY R_RecintoFecha DESC -- Eliminar las más recientes primero
+            LIMIT num_localidades_a_eliminar;
+        END IF;
+    END LOOP;
+
+    -- Cerrar el cursor
+    CLOSE recinto_cursor;
+    
+    SELECT 'Restricción de aforo aplicada exitosamente.';
+END //
+
+DELIMITER ;
 CALL 
 
 -- [5] Limitar el numero de entradas/usuarios para un evento
