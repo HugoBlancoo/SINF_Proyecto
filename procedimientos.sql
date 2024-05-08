@@ -139,7 +139,7 @@ END //
 
 DELIMITER ;
 
-CALL vender_entrada()
+CALL eliminar_ofertas_recintos_cerrados_finalizados()
 
 -- [8] No anular una reserva no hecha por mi
 DELIMITER //
@@ -151,6 +151,7 @@ DELIMITER ;
 
 CALL 
 
+-- Vender localidad
 DELIMITER //
 
 CREATE PROCEDURE VenderLocalidad(IN p_ClienteNumero_Visa INT, IN p_LocalidadUbicacion VARCHAR(50))
