@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS Realiza;
 DROP TABLE IF EXISTS Ofertas;
 DROP TABLE IF EXISTS Pertenecen;
 DROP TABLE IF EXISTS Venta;
+DROP TABLE IF EXISTS Permite;
 
 -- ++++++++++++++++++++++++++++++++ TABLAS ++++++++++++++++++++++++++++++++
 -- Create Usuarios Table
@@ -99,6 +100,35 @@ CREATE TABLE Ofertas (
     FOREIGN KEY (LocalidadUbicacion) REFERENCES Localidades (Ubicacion)
 );
 
+-- Create Permite Table (relacion entre Usuario y Espectaculo)
+CREATE TABLE Permite (
+    UsuarioTipo ENUM(
+        'Infantil',
+        'Jubilado',
+        'Adulto',
+        'Parado'
+    ),
+    EspectaculoTitulo VARCHAR(50),
+    EspectaculoTipo VARCHAR(50),
+    EspectaculoProductor VARCHAR(50),
+    PRIMARY KEY (
+        UsuarioTipo,
+        EspectaculoTitulo,
+        EspectaculoTipo,
+        EspectaculoProductor
+    ),
+    FOREIGN KEY (UsuarioTipo) REFERENCES Usuarios (tipo),
+    FOREIGN KEY (
+        EspectaculoTitulo,
+        EspectaculoTipo,
+        EspectaculoProductor
+    ) REFERENCES Localidades (
+        Titulo,
+        Tipo,
+        Productor
+    )
+);
+
 -- Create Pertenecen Table (relacion entre Ofertas y Realizaciones)
 CREATE TABLE Pertenecen (
     OfertaUsuarioTipo ENUM(
@@ -113,6 +143,7 @@ CREATE TABLE Pertenecen (
     R_EspectaculoProductor VARCHAR(50),
     R_RecintoNombre VARCHAR(50),
     R_RecintoFecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    Precio INT,
     PRIMARY KEY (
         OfertaUsuarioTipo,
         OfertaLocalidadUbicacion,
@@ -144,13 +175,54 @@ CREATE TABLE Pertenecen (
     )
 );
 
--- Create Venta Table (relacion ternaria entre Localidades, Clientes y Asociacion{Usuarios, Localidades, Espectaculos y Recinto})
+-- Create Venta Table (relacion ternaria entre Localidades, Clientes y Pertenecen {Usuarios, Localidades, Espectaculos y Recinto})
 CREATE TABLE Venta (
     ClienteNumero_Visa INT,
     LocalidadUbicacion VARCHAR(50),
-    Atributos_Asociacion ??,
-    PRIMARY KEY (ClienteNumero_Visa, LocalidadUbicacion, Atributos_Asociacion),
+    P_OfertaUsuarioTipo ENUM(
+        'Infantil',
+        'Jubilado',
+        'Adulto',
+        'Parado'
+    ),
+    P_OfertaLocalidadUbicacion VARCHAR(50),
+    P_RealizaEspectaculoTitulo VARCHAR(50),
+    P_RealizaEspectaculoTipo VARCHAR(50),
+    P_RealizaEspectaculoProductor VARCHAR(50),
+    P_RealizaRecintoNombre VARCHAR(50),
+    P_RealizaRecintoFecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    Tipo ENUM(
+        'Reserva',
+        'Pago'
+    ),
+    PRIMARY KEY (
+        ClienteNumero_Visa,
+        LocalidadUbicacion,
+        P_OfertaUsuarioTipo,
+        P_OfertaLocalidadUbicacion,
+        P_RealizaEspectaculoTitulo,
+        P_RealizaEspectaculoTipo,
+        P_RealizaEspectaculoProductor,
+        P_RealizaRecintoNombre
+        P_RealizaRecintoFecha
+    ),
     FOREIGN KEY (ClienteNumero_Visa) REFERENCES Cliente(Numero_Visa),
     FOREIGN KEY (LocalidadUbicacion) REFERENCES Localidades(Ubicacion),
-    FOREIGN KEY (Atributos_Asociacion) REFERENCES Pertenecen(...)
+    FOREIGN KEY (
+        P_OfertaUsuarioTipo,
+        P_OfertaLocalidadUbicacion,
+        P_RealizaEspectaculoTitulo,
+        P_RealizaEspectaculoTipo,
+        P_RealizaEspectaculoProductor,
+        P_RealizaRecintoNombre
+        P_RealizaRecintoFecha
+    ) REFERENCES Pertenecen (
+        OfertaUsuarioTipo,
+        OfertaLocalidadUbicacion,
+        R_EspectaculoTitulo,
+        R_EspectaculoTipo,
+        R_EspectaculoProductor,
+        R_RecintoNombre
+        R_RecintoFecha
+    ),
 );
