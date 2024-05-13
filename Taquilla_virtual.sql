@@ -1,27 +1,15 @@
 DROP DATABASE IF EXISTS Taquilla_Virtual;
-
 CREATE DATABASE Taquilla_Virtual;
-
 use Taquilla_Virtual;
-
 DROP TABLE IF EXISTS Usuarios;
-
 DROP TABLE IF EXISTS Localidades;
-
 DROP TABLE IF EXISTS Cliente;
-
 DROP TABLE IF EXISTS Espectaculo;
-
 DROP TABLE IF EXISTS Recinto;
-
 DROP TABLE IF EXISTS Realiza;
-
 DROP TABLE IF EXISTS Ofertas;
-
 DROP TABLE IF EXISTS Pertenecen;
-
 DROP TABLE IF EXISTS Venta;
-
 DROP TABLE IF EXISTS Permite;
 
 -- ++++++++++++++++++++++++++++++++ TABLAS ++++++++++++++++++++++++++++++++
