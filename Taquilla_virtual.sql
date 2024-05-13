@@ -128,15 +128,7 @@ CREATE TABLE Permite (
         EspectaculoTitulo,
         EspectaculoTipo,
         EspectaculoProductor
-<<<<<<< Updated upstream
     ) REFERENCES Espectaculo (Titulo, Tipo, Productor)
-=======
-    ) REFERENCES Espectaculo (
-        Titulo,
-        Tipo,
-        Productor
-    )
->>>>>>> Stashed changes
 );
 
 -- Create Pertenecen Table (relacion entre Ofertas y Realizaciones)
