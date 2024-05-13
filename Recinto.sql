@@ -16,3 +16,5 @@ SELECT r1.Nombre AS Nombre1, r1.Fecha AS Fecha1, r1.Estado AS Estado1, r2.Nombre
 FROM Recinto r1
 JOIN Recinto r2 ON r1.Nombre!= r2.Nombre AND r1.Fecha!= r2.Fecha;
 
+INSERT INTO Recinto (Nombre, Fecha, Estado)
+SELECT Nombre1, Fecha1, Estado1 FROM TempRecinto;
