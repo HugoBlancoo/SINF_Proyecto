@@ -41,18 +41,12 @@ CREATE TABLE Espectaculo (
     Titulo VARCHAR(50),
     Tipo VARCHAR(50),
     Productor VARCHAR(50),
-    Genero ENUM(
-        'Todos_publico',
-        'No_infantil',
-        'No_jubilado'
-    ),
     PRIMARY KEY (Titulo, Tipo, Productor)
 );
 -- Create Recinto
 CREATE TABLE Recinto (
     Nombre VARCHAR(50),
     Fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    NumMax INT,
     Estado ENUM(
         'Finalizado',
         'Abierto',
