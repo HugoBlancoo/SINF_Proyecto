@@ -17,4 +17,8 @@ FROM Recinto r1
 JOIN Recinto r2 ON r1.Nombre!= r2.Nombre AND r1.Fecha!= r2.Fecha;
 
 INSERT INTO Recinto (Nombre, Fecha, Estado)
-SELECT Nombre1, Fecha1, Estado1 FROM TempRecinto;
+SELECT Nombre1, Fecha1, Estado1 FROM TempRecinto
+WHERE NOT EXISTS (
+    SELECT 1 FROM Recinto r3
+    WHERE r3.Nombre = TempRecinto.Nombre1 AND r3.Fecha = TempRecinto.Fecha1
+);
