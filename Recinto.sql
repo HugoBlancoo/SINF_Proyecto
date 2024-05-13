@@ -11,6 +11,8 @@ VALUES
 ('Recinto9', '2024-01-09 00:00:00', 'Cerrado'),
 ('Recinto10', '2024-01-10 00:00:00', 'Finalizado');
 
+CREATE TEMPORARY TABLE TempRecinto AS
 SELECT r1.Nombre AS Nombre1, r1.Fecha AS Fecha1, r1.Estado AS Estado1, r2.Nombre AS Nombre2, r2.Fecha AS Fecha2, r2.Estado AS Estado2
 FROM Recinto r1
 JOIN Recinto r2 ON r1.Nombre!= r2.Nombre AND r1.Fecha!= r2.Fecha;
+
