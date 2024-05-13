@@ -37,7 +37,7 @@ INSERT INTO Espectaculo (Titulo, Tipo, Productor) VALUES
 ('Jurassic Park', 'Película', 'Universal Pictures'),
 ('Star Wars: Episodio IV - Una nueva esperanza', 'Película', 'Lucasfilm'),
 ('Harry Potter y la piedra filosofal', 'Película', 'Warner Bros. Pictures'),
-('Campeones', 'Pelicula', 'Morena Films')
+('Campeones', 'Pelicula', 'Morena Films'),
 ('El Señor de los Anillos: La Comunidad del Anillo', 'Película', 'New Line Cinema'),
 ('Concierto de Coldplay', 'Concierto', 'Live Nation'),
 ('Concierto de U2', 'Concierto', 'Live Nation'),
