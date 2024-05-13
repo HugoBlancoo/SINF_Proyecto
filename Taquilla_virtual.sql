@@ -1,15 +1,27 @@
 DROP DATABASE IF EXISTS Taquilla_Virtual;
+
 CREATE DATABASE Taquilla_Virtual;
+
 use Taquilla_Virtual;
+
 DROP TABLE IF EXISTS Usuarios;
+
 DROP TABLE IF EXISTS Localidades;
+
 DROP TABLE IF EXISTS Cliente;
+
 DROP TABLE IF EXISTS Espectaculo;
+
 DROP TABLE IF EXISTS Recinto;
+
 DROP TABLE IF EXISTS Realiza;
+
 DROP TABLE IF EXISTS Ofertas;
+
 DROP TABLE IF EXISTS Pertenecen;
+
 DROP TABLE IF EXISTS Venta;
+
 DROP TABLE IF EXISTS Permite;
 
 -- ++++++++++++++++++++++++++++++++ TABLAS ++++++++++++++++++++++++++++++++
@@ -24,9 +36,10 @@ CREATE TABLE Usuarios (
 );
 -- Create Localidades Table
 CREATE TABLE Localidades (
-    Ubicacion VARCHAR(50) PRIMARY KEY,
+    Ubicacion VARCHAR(50),
     Estado ENUM('Libre', 'Deteriorado'), -- Si esta deteriorado no se vende y ya
-    Grada VARCHAR(50)
+    Grada VARCHAR(50),
+    PRIMARY KEY (Ubicacion, Grada)
 );
 -- Create Cliente Table
 CREATE TABLE Cliente (
@@ -83,12 +96,14 @@ CREATE TABLE Ofertas (
         'Parado'
     ),
     LocalidadUbicacion VARCHAR(50),
+    LocalidadGrada VARCHAR(50),
     PRIMARY KEY (
         UsuarioTipo,
-        LocalidadUbicacion
+        LocalidadUbicacion,
+        LocalidadGrada
     ),
     FOREIGN KEY (UsuarioTipo) REFERENCES Usuarios (tipo),
-    FOREIGN KEY (LocalidadUbicacion) REFERENCES Localidades (Ubicacion)
+    FOREIGN KEY (LocalidadUbicacion,LocalidadGrada) REFERENCES Localidades (Ubicacion,Grada)
 );
 
 -- Create Permite Table (relacion entre Usuario y Espectaculo)
@@ -133,6 +148,7 @@ CREATE TABLE Pertenecen (
         'Parado'
     ),
     OfertaLocalidadUbicacion VARCHAR(50),
+    OfertaLocalidadGrada VARCHAR(50),
     R_EspectaculoTitulo VARCHAR(50),
     R_EspectaculoTipo VARCHAR(50),
     R_EspectaculoProductor VARCHAR(50),
@@ -142,6 +158,7 @@ CREATE TABLE Pertenecen (
     PRIMARY KEY (
         OfertaUsuarioTipo,
         OfertaLocalidadUbicacion,
+        OfertaLocalidadGrada,
         R_EspectaculoTitulo,
         R_EspectaculoTipo,
         R_EspectaculoProductor,
@@ -150,10 +167,12 @@ CREATE TABLE Pertenecen (
     ),
     FOREIGN KEY (
         OfertaUsuarioTipo,
-        OfertaLocalidadUbicacion
+        OfertaLocalidadUbicacion,
+        OfertaLocalidadGrada
     ) REFERENCES Ofertas (
         UsuarioTipo,
-        LocalidadUbicacion
+        LocalidadUbicacion,
+        LocalidadGrada
     ),
     FOREIGN KEY (
         R_EspectaculoTitulo,
@@ -174,6 +193,7 @@ CREATE TABLE Pertenecen (
 CREATE TABLE Venta (
     ClienteNumero_Visa INT,
     LocalidadUbicacion VARCHAR(50),
+    LocalidadGrada VARCHAR(50),
     P_OfertaUsuarioTipo ENUM(
         'Infantil',
         'Jubilado',
@@ -181,6 +201,7 @@ CREATE TABLE Venta (
         'Parado'
     ),
     P_OfertaLocalidadUbicacion VARCHAR(50),
+    P_OferataLocalidadGrada VARCHAR(50),
     P_RealizaEspectaculoTitulo VARCHAR(50),
     P_RealizaEspectaculoTipo VARCHAR(50),
     P_RealizaEspectaculoProductor VARCHAR(50),
@@ -190,8 +211,10 @@ CREATE TABLE Venta (
     PRIMARY KEY (
         ClienteNumero_Visa,
         LocalidadUbicacion,
+        LocalidadGrada,
         P_OfertaUsuarioTipo,
         P_OfertaLocalidadUbicacion,
+        P_OferataLocalidadGrada,
         P_RealizaEspectaculoTitulo,
         P_RealizaEspectaculoTipo,
         P_RealizaEspectaculoProductor,
@@ -199,10 +222,11 @@ CREATE TABLE Venta (
         P_RealizaRecintoFecha
     ),
     FOREIGN KEY (ClienteNumero_Visa) REFERENCES Cliente (Numero_Visa),
-    FOREIGN KEY (LocalidadUbicacion) REFERENCES Localidades (Ubicacion),
+    FOREIGN KEY (LocalidadUbicacion, LocalidadGrada) REFERENCES Localidades (Ubicacion, Grada),
     FOREIGN KEY (
         P_OfertaUsuarioTipo,
         P_OfertaLocalidadUbicacion,
+        P_OferataLocalidadGrada,
         P_RealizaEspectaculoTitulo,
         P_RealizaEspectaculoTipo,
         P_RealizaEspectaculoProductor,
@@ -211,6 +235,7 @@ CREATE TABLE Venta (
     ) REFERENCES Pertenecen (
         OfertaUsuarioTipo,
         OfertaLocalidadUbicacion,
+        OfertaLocalidadGrada,
         R_EspectaculoTitulo,
         R_EspectaculoTipo,
         R_EspectaculoProductor,
