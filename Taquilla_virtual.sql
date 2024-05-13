@@ -5,14 +5,23 @@ CREATE DATABASE Taquilla_Virtual;
 use Taquilla_Virtual;
 
 DROP TABLE IF EXISTS Usuarios;
+
 DROP TABLE IF EXISTS Localidades;
+
 DROP TABLE IF EXISTS Cliente;
+
 DROP TABLE IF EXISTS Espectaculo;
+
 DROP TABLE IF EXISTS Recinto;
+
 DROP TABLE IF EXISTS Realiza;
+
 DROP TABLE IF EXISTS Ofertas;
+
 DROP TABLE IF EXISTS Pertenecen;
+
 DROP TABLE IF EXISTS Venta;
+
 DROP TABLE IF EXISTS Permite;
 
 -- ++++++++++++++++++++++++++++++++ TABLAS ++++++++++++++++++++++++++++++++
@@ -116,11 +125,7 @@ CREATE TABLE Permite (
         EspectaculoTitulo,
         EspectaculoTipo,
         EspectaculoProductor
-    ) REFERENCES Localidades (
-        Titulo,
-        Tipo,
-        Productor
-    )
+    ) REFERENCES Espectaculo (Titulo, Tipo, Productor)
 );
 
 -- Create Pertenecen Table (relacion entre Ofertas y Realizaciones)
@@ -185,10 +190,7 @@ CREATE TABLE Venta (
     P_RealizaEspectaculoProductor VARCHAR(50),
     P_RealizaRecintoNombre VARCHAR(50),
     P_RealizaRecintoFecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    Tipo ENUM(
-        'Reserva',
-        'Pago'
-    ),
+    Tipo ENUM('Reserva', 'Pago'),
     PRIMARY KEY (
         ClienteNumero_Visa,
         LocalidadUbicacion,
@@ -197,18 +199,18 @@ CREATE TABLE Venta (
         P_RealizaEspectaculoTitulo,
         P_RealizaEspectaculoTipo,
         P_RealizaEspectaculoProductor,
-        P_RealizaRecintoNombre
+        P_RealizaRecintoNombre,
         P_RealizaRecintoFecha
     ),
-    FOREIGN KEY (ClienteNumero_Visa) REFERENCES Cliente(Numero_Visa),
-    FOREIGN KEY (LocalidadUbicacion) REFERENCES Localidades(Ubicacion),
+    FOREIGN KEY (ClienteNumero_Visa) REFERENCES Cliente (Numero_Visa),
+    FOREIGN KEY (LocalidadUbicacion) REFERENCES Localidades (Ubicacion),
     FOREIGN KEY (
         P_OfertaUsuarioTipo,
         P_OfertaLocalidadUbicacion,
         P_RealizaEspectaculoTitulo,
         P_RealizaEspectaculoTipo,
         P_RealizaEspectaculoProductor,
-        P_RealizaRecintoNombre
+        P_RealizaRecintoNombre,
         P_RealizaRecintoFecha
     ) REFERENCES Pertenecen (
         OfertaUsuarioTipo,
@@ -216,7 +218,7 @@ CREATE TABLE Venta (
         R_EspectaculoTitulo,
         R_EspectaculoTipo,
         R_EspectaculoProductor,
-        R_RecintoNombre
+        R_RecintoNombre,
         R_RecintoFecha
-    ),
+    )
 );
