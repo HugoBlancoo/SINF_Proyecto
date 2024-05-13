@@ -1,31 +1,58 @@
-INSERT INTO Espectaculo (Titulo, Tipo, Productor) 
-VALUES 
-    ('El Rey León', 'Musical', 'Disney Theatrical Productions'),
-    ('La La Land in Concert', 'Concierto', 'Summit Entertainment'),
-    ('El Fantasma de la Ópera', 'Musical', 'Cameron Mackintosh'),
-    ('The Rolling Stones: No Filter Tour', 'Concierto', 'AEG Presents'),
-    ('Harry Potter and the Cursed Child', 'Teatro', 'Sonia Friedman Productions'),
-    ('U2: The Joshua Tree Tour', 'Concierto', 'Live Nation'),
-    ('Hamilton', 'Musical', 'Lin-Manuel Miranda'),
-    ('Cirque du Soleil: Luzia', 'Espectáculo de Circo', 'Cirque du Soleil'),
-    ('Michael Jackson: The Immortal World Tour', 'Concierto', 'Cirque du Soleil'),
-    ('Game of Thrones Live Concert Experience', 'Concierto', 'Live Nation');
+INSERT INTO Espectaculo (Titulo, Tipo, Productor) VALUES
+('El Rey León', 'Musical', 'Disney Theatrical Productions'),
+('El Fantasma de la Ópera', 'Musical', 'Really Useful Group'),
+('Wicked', 'Musical', 'Marc Platt'),
+('Hamilton', 'Musical', 'Lin-Manuel Miranda'),
+('Romeo y Julieta', 'Teatro', 'Shakespeare Productions'),
+('La Bella y la Bestia', 'Musical', 'Disney Theatrical Productions'),
+('Chicago', 'Musical', 'Barry and Fran Weissler'),
+('Les Misérables', 'Musical', 'Cameron Mackintosh'),
+('Cats', 'Musical', 'The Really Useful Group'),
+('Mamma Mia!', 'Musical', 'Benny Andersson & Björn Ulvaeus');
 
 
-INSERT INTO EspectaculoAux (Titulo, Tipo, Productor) 
-VALUES 
-    ('U2: The Joshua Tree Tour', 'Concierto', 'Live Nation'),
-    ('Hamilton', 'Musical', 'Lin-Manuel Miranda'),
-    ('Cirque du Soleil: Luzia', 'Espectáculo de Circo', 'Cirque du Soleil'),
-    ('Michael Jackson: The Immortal World Tour', 'Concierto', 'Cirque du Soleil'),
-    ('Game of Thrones Live Concert Experience', 'Concierto', 'Live Nation');
+INSERT INTO Espectaculo (Titulo, Tipo, Productor) VALUES
+('El Guardaespaldas', 'Musical', 'Michael Harrison'),
+('El Rey Lear', 'Teatro', 'Royal Shakespeare Company'),
+('Sweeney Todd', 'Musical', 'Stephen Sondheim'),
+('El Fantasma de Canterville', 'Teatro', 'Teatro de la Ciudad'),
+('Annie', 'Musical', 'Martin Charnin'),
+('El Jorobado de Notre Dame', 'Musical', 'Disney Theatrical Productions'),
+('Don Juan Tenorio', 'Teatro', 'Compañía Nacional de Teatro'),
+('Billy Elliot', 'Musical', 'Universal Pictures Stage Productions'),
+('El Lago de los Cisnes', 'Ballet', 'Teatro Bolshói'),
+('La Traviata', 'Ópera', 'Metropolitan Opera'),
+('Hairspray', 'Musical', 'Margo Lion'),
+('Jersey Boys', 'Musical', 'Dodger Theatricals'),
+('Cabaret', 'Musical', 'Harold Prince'),
+('El Mago de Oz', 'Musical', 'Andrew Lloyd Webber'),
+('La Flauta Mágica', 'Ópera', 'Wiener Staatsoper'),
+('Mary Poppins', 'Musical', 'Cameron Mackintosh'),
+('Porgy and Bess', 'Ópera', 'Gershwin Estate'),
+('El Cascanueces', 'Ballet', 'Teatro Mariinsky'),
+('El Hombre de la Mancha', 'Musical', 'Albert Marre'),
+('La Sirenita', 'Musical', 'Disney Theatrical Productions');
 
+INSERT INTO Espectaculo (Titulo, Tipo, Productor) VALUES
+('La La Land', 'Película', 'Summit Entertainment'),
+('Bohemian Rhapsody', 'Película', '20th Century Fox'),
+('El Padrino', 'Película', 'Paramount Pictures'),
+('Titanic', 'Película', '20th Century Studios'),
+('Avatar', 'Película', '20th Century Studios'),
+('Jurassic Park', 'Película', 'Universal Pictures'),
+('Star Wars: Episodio IV - Una nueva esperanza', 'Película', 'Lucasfilm'),
+('Harry Potter y la piedra filosofal', 'Película', 'Warner Bros. Pictures'),
+('Campeones', 'Pelicula', 'Morena Films')
+('El Señor de los Anillos: La Comunidad del Anillo', 'Película', 'New Line Cinema');
 
-SELECT *
-FROM Espectaculo
-CROSS JOIN EspectaculoAux;
-
-SELECT *
-FROM EspectaculoAux
-CROSS JOIN Espectaculo;
-
+INSERT INTO Espectaculo (Titulo, Tipo, Productor) VALUES
+('Concierto de Coldplay', 'Concierto', 'Live Nation'),
+('Concierto de U2', 'Concierto', 'Live Nation'),
+('Concierto de Metallica', 'Concierto', 'Live Nation'),
+('Concierto de Extremoduro', 'Concierto', 'Warner Music Spain'),
+('Concierto de Vetusta Morla', 'Concierto', 'Sonora S.A.'),
+('Concierto de Amaral', 'Concierto', 'Gato Negro Producciones'),
+('Concierto de El Barrio', 'Concierto', 'Riff Producciones'),
+('Concierto de Rosalía', 'Concierto', 'Sony Music Entertainment'),
+('Concierto de Love of Lesbian', 'Concierto', 'Warner Music Spain'),
+('Concierto de La Oreja de Van Gogh', 'Concierto', 'Sony Music Entertainment');
