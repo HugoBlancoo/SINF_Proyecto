@@ -53,6 +53,13 @@ CREATE TABLE Espectaculo (
     Productor VARCHAR(50),
     PRIMARY KEY (Titulo, Tipo, Productor)
 );
+
+CREATE TABLE EspectaculoAux (
+    Titulo VARCHAR(50),
+    Tipo VARCHAR(50),
+    Productor VARCHAR(50),
+    PRIMARY KEY (Titulo, Tipo, Productor)
+);
 -- Create Recinto
 CREATE TABLE Recinto (
     Nombre VARCHAR(50),
@@ -234,8 +241,4 @@ CREATE TABLE Venta (
         R_RecintoNombre,
         R_RecintoFecha
     )
-<<<<<<< Updated upstream
 );
-=======
-);
->>>>>>> Stashed changes
