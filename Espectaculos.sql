@@ -8,10 +8,7 @@ INSERT INTO Espectaculo (Titulo, Tipo, Productor) VALUES
 ('Chicago', 'Musical', 'Barry and Fran Weissler'),
 ('Les Misérables', 'Musical', 'Cameron Mackintosh'),
 ('Cats', 'Musical', 'The Really Useful Group'),
-('Mamma Mia!', 'Musical', 'Benny Andersson & Björn Ulvaeus');
-
-
-INSERT INTO Espectaculo (Titulo, Tipo, Productor) VALUES
+('Mamma Mia!', 'Musical', 'Benny Andersson & Björn Ulvaeus'),
 ('El Guardaespaldas', 'Musical', 'Michael Harrison'),
 ('El Rey Lear', 'Teatro', 'Royal Shakespeare Company'),
 ('Sweeney Todd', 'Musical', 'Stephen Sondheim'),
@@ -31,9 +28,7 @@ INSERT INTO Espectaculo (Titulo, Tipo, Productor) VALUES
 ('Porgy and Bess', 'Ópera', 'Gershwin Estate'),
 ('El Cascanueces', 'Ballet', 'Teatro Mariinsky'),
 ('El Hombre de la Mancha', 'Musical', 'Albert Marre'),
-('La Sirenita', 'Musical', 'Disney Theatrical Productions');
-
-INSERT INTO Espectaculo (Titulo, Tipo, Productor) VALUES
+('La Sirenita', 'Musical', 'Disney Theatrical Productions'),
 ('La La Land', 'Película', 'Summit Entertainment'),
 ('Bohemian Rhapsody', 'Película', '20th Century Fox'),
 ('El Padrino', 'Película', 'Paramount Pictures'),
@@ -43,9 +38,7 @@ INSERT INTO Espectaculo (Titulo, Tipo, Productor) VALUES
 ('Star Wars: Episodio IV - Una nueva esperanza', 'Película', 'Lucasfilm'),
 ('Harry Potter y la piedra filosofal', 'Película', 'Warner Bros. Pictures'),
 ('Campeones', 'Pelicula', 'Morena Films')
-('El Señor de los Anillos: La Comunidad del Anillo', 'Película', 'New Line Cinema');
-
-INSERT INTO Espectaculo (Titulo, Tipo, Productor) VALUES
+('El Señor de los Anillos: La Comunidad del Anillo', 'Película', 'New Line Cinema'),
 ('Concierto de Coldplay', 'Concierto', 'Live Nation'),
 ('Concierto de U2', 'Concierto', 'Live Nation'),
 ('Concierto de Metallica', 'Concierto', 'Live Nation'),
