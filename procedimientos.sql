@@ -1,8 +1,9 @@
-DROP PROCEDURE IF EXISTS restringir_usuarios
-DROP PROCEDURE IF EXISTS restringir_aforo
-DROP PROCEDURE IF EXISTS limitar_usuarios
-DROP PROCEDURE IF EXISTS vender_entrada
-DROP PROCEDURE IF EXISTS anular_reserva
+DROP PROCEDURE IF EXISTS restringir_usuarios;
+DROP PROCEDURE IF EXISTS restringir_aforo;
+DROP PROCEDURE IF EXISTS limitar_usuarios;
+DROP PROCEDURE IF EXISTS vender_entrada;
+DROP PROCEDURE IF EXISTS anular_reserva;
+DROP PROCEDURE IF EXISTS comprar_localidad;
 
 -- ver funciones creadas
 SHOW PROCEDURE STATUS WHERE Db = 'Taquilla_virtual';
@@ -178,3 +179,80 @@ END//
 
 DELIMITER ;
 
+-- Comprar una localidad
+
+DELIMITER //
+
+CREATE PROCEDURE comprar_localidad(
+    IN p_numero_visa INT,
+    IN p_localidad_ubicacion VARCHAR(50),
+    IN p_localidad_grada VARCHAR(50),
+    IN p_tipo_usuario ENUM('Infantil', 'Jubilado', 'Adulto', 'Parado'),
+    IN p_espectaculo_titulo VARCHAR(50),
+    IN p_espectaculo_tipo VARCHAR(50),
+    IN p_espectaculo_productor VARCHAR(50),
+    IN p_recinto_nombre VARCHAR(50),
+    IN p_recinto_fecha TIMESTAMP,
+    IN p_tipo_operacion ENUM('Reserva', 'Pago')
+)
+BEGIN
+    DECLARE recinto_estado ENUM('Finalizado', 'Abierto', 'Cerrado');
+    DECLARE permite_existe BOOLEAN;
+    DECLARE localidad_vendida BOOLEAN;
+
+    -- Comprobar si el cliente existe
+    IF NOT EXISTS (SELECT * FROM Cliente WHERE Numero_Visa = p_numero_visa) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El cliente no existe';
+    END IF;
+
+    -- Comprobar si el recinto está abierto en la fecha especificada
+    SELECT Estado INTO recinto_estado
+    FROM Recinto
+    WHERE Nombre = p_recinto_nombre AND Fecha = p_recinto_fecha;
+
+    IF recinto_estado != 'Abierto' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El recinto no está abierto en la fecha especificada';
+    END IF;
+
+    -- Verificar si el tipo de usuario está permitido para el espectáculo
+    SELECT EXISTS (
+        SELECT 1
+        FROM Permite
+        WHERE UsuarioTipo = p_tipo_usuario AND EspectaculoTitulo = p_espectaculo_titulo
+    ) INTO permite_existe;
+
+    IF NOT permite_existe THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El tipo de usuario no está permitido para este espectáculo';
+    END IF;
+
+    -- Verificar si la localidad en la grada y el recinto ya está vendida
+    SELECT EXISTS (
+        SELECT 1
+        FROM Venta
+        WHERE LocalidadUbicacion = p_localidad_ubicacion AND LocalidadGrada = p_localidad_grada
+    ) INTO localidad_vendida;
+
+    IF localidad_vendida THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'La localidad ya ha sido vendida';
+    END IF;
+
+    -- Insertar la localidad en la tabla de ventas
+    INSERT INTO Venta 
+        (ClienteNumero_Visa, LocalidadUbicacion, LocalidadGrada, 
+        P_OfertaUsuarioTipo, P_OfertaLocalidadUbicacion, P_OferataLocalidadGrada, 
+        P_RealizaEspectaculoTitulo, P_RealizaEspectaculoTipo, P_RealizaEspectaculoProductor, 
+        P_RealizaRecintoNombre, P_RealizaRecintoFecha, Tipo)
+    VALUES (p_numero_visa, p_localidad_ubicacion, p_localidad_grada, p_tipo_usuario, 
+        p_localidad_ubicacion, p_localidad_grada, p_espectaculo_titulo, p_espectaculo_tipo, p_espectaculo_productor, p_recinto_nombre, p_recinto_fecha, p_tipo_operacion);
+
+    SELECT 'Localidad comprada y puesta en venta exitosamente' AS Resultado;
+END //
+
+DELIMITER ;
+
+CALL comprar_localidad(286, 'F1C1', 'Grada1', 'Adulto', 'Annie', 'Musical', 'Martin Charnin','Recinto1', '2024-01-10 00:00:00', 'Pago');
+CALL comprar_localidad(286, 'F1C2', 'Grada1', 'Parado', 'Annie', 'Musical', 'Martin Charnin','Recinto1', '2024-01-10 00:00:00', 'Pago');
