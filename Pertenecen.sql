@@ -19,8 +19,14 @@ SELECT
     r.EspectaculoProductor,
     r.RecintoNombre,
     r.RecintoFecha,
-    50
+    CASE o.UsuarioTipo
+        WHEN 'Infantil' THEN 25
+        WHEN 'Jubilado' THEN 30
+        WHEN 'Adulto' THEN 50
+        WHEN 'Parado' THEN 20
+        ELSE 100  -- Precio por defecto si no se encuentra el tipo de usuario
+    END AS Precio
 FROM
-    Ofertas o
+   Ofertas o
 CROSS JOIN
-    (SELECT * FROM Realiza WHERE RecintoNombre = 'Recinto2') r
+    (SELECT * FROM Realiza WHERE RecintoFecha = '2024-01-10 00:00:00') r;

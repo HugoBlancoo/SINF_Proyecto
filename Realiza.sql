@@ -1,3 +1,4 @@
+DELETE FROM Realiza;
 INSERT INTO Realiza (EspectaculoTitulo, EspectaculoTipo, EspectaculoProductor, RecintoNombre, RecintoFecha)
 SELECT 
     e.Titulo,

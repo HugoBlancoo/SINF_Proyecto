@@ -60,3 +60,4 @@ INSERT INTO Espectaculo (Titulo, Tipo, Productor) VALUES
 ('Real Sociedad vs Celta de Vigo', 'Partido de Futbol', 'La Liga'),
 ('Sevilla FC vs Celta de Vigo', 'Partido de Futbol', 'La Liga'),
 ('Villarreal CF vs Celta de Vigo', 'Partido de Futbol', 'La Liga');
+
