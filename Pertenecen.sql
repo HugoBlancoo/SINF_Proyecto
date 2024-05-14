@@ -23,5 +23,4 @@ SELECT
 FROM
     Ofertas o
 CROSS JOIN
-    Realiza r 
-LIMIT 1000;
+    (SELECT * FROM Realiza WHERE RecintoNombre = 'Recinto2') r
