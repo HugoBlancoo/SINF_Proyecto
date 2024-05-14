@@ -1,3 +1,4 @@
+DELETE FROM Localidades;
 INSERT INTO Localidades (Ubicacion, Estado, Grada) VALUES 
 ('F1C1',  'Libre', 'Grada1'),
 ('F1C2',  'Libre', 'Grada1'),

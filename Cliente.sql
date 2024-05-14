@@ -1,3 +1,4 @@
+DELETE FROM Cliente;
 INSERT INTO Cliente (Numero_Visa, Nombre) VALUES
 (1234567, 'Juan Pérez'),
 (2345678, 'María García'),

@@ -1,4 +1,4 @@
-DELETE from `Espectaculo`;
+DELETE FROM Espectaculo;
 INSERT INTO Espectaculo (Titulo, Tipo, Productor) VALUES
 ('El Rey León', 'Musical', 'Disney Theatrical Productions'),
 ('El Fantasma de la Ópera', 'Musical', 'Really Useful Group'),
@@ -49,14 +49,4 @@ INSERT INTO Espectaculo (Titulo, Tipo, Productor) VALUES
 ('Concierto de El Barrio', 'Concierto', 'Riff Producciones'),
 ('Concierto de Rosalía', 'Concierto', 'Sony Music Entertainment'),
 ('Concierto de Love of Lesbian', 'Concierto', 'Warner Music Spain'),
-('Concierto de La Oreja de Van Gogh', 'Concierto', 'Sony Music Entertainment'),
-('Celta de Vigo vs Real Madrid', 'Partido de Futbol', 'La Liga'),
-('FC Barcelona vs Celta de Vigo', 'Partido de Futbol', 'La Liga'),
-('Celta de Vigo vs Atlético de Madrid', 'Partido de Futbol', 'La Liga'),
-('Sevilla FC vs Celta de Vigo', 'Partido de Futbol', 'La Liga'),
-('Celta de Vigo vs Valencia CF', 'Partido de Futbol', 'La Liga'),
-('Real Sociedad vs Celta de Vigo', 'Partido de Futbol', 'La Liga'),
-('Celta de Vigo vs Athletic Club', 'Partido de Futbol', 'La Liga'),
-('Villarreal CF vs Celta de Vigo', 'Partido de Futbol', 'La Liga'),
-('Celta de Vigo vs Levante UD', 'Partido de Futbol', 'La Liga'),
-('Getafe CF vs Celta de Vigo', 'Partido de Futbol', 'La Liga');
+('Concierto de La Oreja de Van Gogh', 'Concierto', 'Sony Music Entertainment');
