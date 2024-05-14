@@ -11,7 +11,9 @@ CREATE INDEX idx_localidades_grada ON Localidades (Grada);
 -- La tabla Espectaculo tiene una clave primaria compuesta, por lo que tampoco necesita índices adicionales a menos que frecuentemente se hagan consultas sobre columnas individuales.
 
 -- Indice para Recinto
+EXPLAIN SELECT * FROM Recinto WHERE Estado = 'Abierto';
 CREATE INDEX idx_recinto_estado ON Recinto (Estado);
+EXPLAIN SELECT * FROM Recinto WHERE Estado = 'Abierto';
 
 -- Indice para Realiza
 CREATE INDEX idx_realiza_espectaculo ON Realiza (EspectaculoTitulo, EspectaculoTipo, EspectaculoProductor);
