@@ -58,7 +58,7 @@ BEGIN
     SELECT EXISTS (
         SELECT 1
         FROM Venta
-        WHERE LocalidadUbicacion = p_localidad_ubicacion AND LocalidadGrada = p_localidad_grada
+        WHERE LocalidadUbicacion = p_localidad_ubicacion AND LocalidadGrada = p_localidad_grada AND P_RealizaRecintoNombre = p_recinto_nombre
     ) INTO localidad_vendida;
 
     IF localidad_vendida THEN
