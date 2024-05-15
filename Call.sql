@@ -27,3 +27,5 @@ CALL AnularReserva(286, 'F1C1', 'Grada1', 'Annie', 'Musical', 'Martin Charnin','
 -- 3º Hacemos la anulacion
 CALL AnularReserva(286, 'F1C2', 'Grada1', 'Annie', 'Musical', 'Martin Charnin','Recinto1', '2024-01-10 00:00:00');
 CALL TotalRecaudadoPorEspectaculo();
+
+CALL CambiarEstadoEventos();

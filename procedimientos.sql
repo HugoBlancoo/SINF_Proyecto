@@ -340,3 +340,46 @@ BEGIN
 END //
 
 DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE CambiarEstadoEventos()
+BEGIN
+    -- Cambiar el estado de los eventos cerrados a abiertos en la tabla Recinto
+    UPDATE Recinto
+    SET Estado = 'Abierto'
+    WHERE Estado = 'Cerrado';
+
+    -- Cambiar el estado de los eventos cerrados a abiertos en la tabla Realiza
+    UPDATE Realiza
+    SET RecintoFecha = (
+        SELECT Fecha
+        FROM Recinto
+        WHERE Estado = 'Abierto'
+        LIMIT 1
+    )
+    WHERE RecintoFecha IN (
+        SELECT Fecha
+        FROM Recinto
+        WHERE Estado = 'Cerrado'
+    );
+
+    -- Cambiar el estado de los eventos cerrados a abiertos en la tabla Pertenecen
+    UPDATE Pertenecen
+    SET R_RecintoFecha = (
+        SELECT Fecha
+        FROM Recinto
+        WHERE Estado = 'Abierto'
+        LIMIT 1
+    )
+    WHERE R_RecintoFecha IN (
+        SELECT Fecha
+        FROM Recinto
+        WHERE Estado = 'Cerrado'
+    );
+END //
+DELIMITER ;
+
+
+
+DROP PROCEDURE IF EXISTS `CambiarEstadoEventos`;
+
