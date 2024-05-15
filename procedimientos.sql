@@ -309,3 +309,34 @@ BEGIN
 END //
 DELIMITER ;
 
+DELIMITER //
+
+CREATE PROCEDURE TotalRecaudadoPorEspectaculo()
+BEGIN
+    SELECT
+        V.P_RealizaEspectaculoTitulo AS Espectaculo_Titulo,
+        V.P_RealizaEspectaculoTipo AS Espectaculo_Tipo,
+        V.P_RealizaEspectaculoProductor AS Espectaculo_Productor,
+        SUM(
+            CASE
+                WHEN V.Tipo = 'Pago' THEN P.Precio
+                ELSE 0
+            END
+        ) AS Total_Recaudado
+    FROM
+        Venta V
+        JOIN Pertenecen P ON V.P_OfertaUsuarioTipo = P.OfertaUsuarioTipo
+            AND V.P_OfertaLocalidadUbicacion = P.OfertaLocalidadUbicacion
+            AND V.P_OferataLocalidadGrada = P.OfertaLocalidadGrada
+            AND V.P_RealizaEspectaculoTitulo = P.R_EspectaculoTitulo
+            AND V.P_RealizaEspectaculoTipo = P.R_EspectaculoTipo
+            AND V.P_RealizaEspectaculoProductor = P.R_EspectaculoProductor
+            AND V.P_RealizaRecintoNombre = P.R_RecintoNombre
+            AND V.P_RealizaRecintoFecha = P.R_RecintoFecha
+    GROUP BY
+        V.P_RealizaEspectaculoTitulo,
+        V.P_RealizaEspectaculoTipo,
+        V.P_RealizaEspectaculoProductor;
+END //
+
+DELIMITER ;
