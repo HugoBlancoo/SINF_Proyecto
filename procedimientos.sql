@@ -447,7 +447,7 @@ BEGIN
     FROM 
         Venta
     WHERE 
-        ClienteNumero_Visa = p_numeroVisa;
+        ClienteNumero_Visa = p_numeroVisa AND Tipo=Pago;
 END //
 
 DELIMITER ;
