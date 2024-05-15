@@ -254,5 +254,58 @@ END //
 
 DELIMITER ;
 
-CALL comprar_localidad(286, 'F1C1', 'Grada1', 'Adulto', 'Annie', 'Musical', 'Martin Charnin','Recinto1', '2024-01-10 00:00:00', 'Pago');
-CALL comprar_localidad(286, 'F1C2', 'Grada1', 'Parado', 'Annie', 'Musical', 'Martin Charnin','Recinto1', '2024-01-10 00:00:00', 'Pago');
+
+-- Anular Reserva
+
+DELIMITER //
+CREATE PROCEDURE AnularReserva(
+    IN p_Numero_Visa INT,
+    IN p_LocalidadUbicacion VARCHAR(50),
+    IN p_LocalidadGrada VARCHAR(50),
+    IN p_EspectaculoTitulo VARCHAR(50),
+    IN p_EspectaculoTipo VARCHAR(50),
+    IN p_EspectaculoProductor VARCHAR(50),
+    IN p_RecintoNombre VARCHAR(50),
+    IN p_RecintoFecha TIMESTAMP
+)
+BEGIN
+    DECLARE total_reservas INT;
+
+    -- Verificar si el cliente existe
+    SELECT COUNT(*) INTO total_reservas FROM Cliente WHERE Numero_Visa = p_Numero_Visa;
+    IF total_reservas = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El cliente especificado no existe';
+    END IF;
+
+    -- Verificar si el cliente tiene alguna reserva
+    SELECT COUNT(*) INTO total_reservas FROM Venta
+    WHERE ClienteNumero_Visa = p_Numero_Visa AND
+          LocalidadUbicacion = p_LocalidadUbicacion AND
+          LocalidadGrada = p_LocalidadGrada AND
+          P_RealizaEspectaculoTitulo = p_EspectaculoTitulo AND
+          P_RealizaEspectaculoTipo = p_EspectaculoTipo AND
+          P_RealizaEspectaculoProductor = p_EspectaculoProductor AND
+          P_RealizaRecintoNombre = p_RecintoNombre AND
+          P_RealizaRecintoFecha = p_RecintoFecha AND
+          Tipo = 'Reserva';
+
+    IF total_reservas = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El cliente no tiene ninguna reserva para esta localidad y espectáculo';
+    END IF;
+
+    -- Anular la reserva
+    DELETE FROM Venta
+    WHERE ClienteNumero_Visa = p_Numero_Visa AND
+          LocalidadUbicacion = p_LocalidadUbicacion AND
+          LocalidadGrada = p_LocalidadGrada AND
+          P_RealizaEspectaculoTitulo = p_EspectaculoTitulo AND
+          P_RealizaEspectaculoTipo = p_EspectaculoTipo AND
+          P_RealizaEspectaculoProductor = p_EspectaculoProductor AND
+          P_RealizaRecintoNombre = p_RecintoNombre AND
+          P_RealizaRecintoFecha = p_RecintoFecha AND
+          Tipo = 'Reserva';
+
+    SELECT 'Reserva anulada exitosamente' AS Message;
+END //
+DELIMITER ;
+

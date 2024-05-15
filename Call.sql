@@ -14,3 +14,13 @@ CALL comprar_localidad(286, 'F1C1', 'Grada2', 'Parado', 'Annie', 'Musical', 'Mar
 
 -- Hacemos una reserva
 CALL comprar_localidad(286, 'F1C2', 'Grada1', 'Adulto', 'Annie', 'Musical', 'Martin Charnin','Recinto1', '2024-01-10 00:00:00', 'Reserva');
+
+
+--  Probar Anular Reserva 
+SELECT * FROM Venta;
+-- 1º Otro cliente intenta anular la reserva de otro
+CALL AnularReserva(998, 'F1C2', 'Grada1', 'Annie', 'Musical', 'Martin Charnin','Recinto1', '2024-01-10 00:00:00');
+-- 2º Intentas anular una reserva que no tienes
+CALL AnularReserva(286, 'F1C1', 'Grada1', 'Annie', 'Musical', 'Martin Charnin','Recinto1', '2024-01-10 00:00:00');
+-- 3º Hacemos la anulacion
+CALL AnularReserva(286, 'F1C2', 'Grada1', 'Annie', 'Musical', 'Martin Charnin','Recinto1', '2024-01-10 00:00:00');
