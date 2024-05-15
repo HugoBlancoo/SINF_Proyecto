@@ -1,5 +1,10 @@
-CREATE VIEW vista_Usuario AS
+Create user 'user'@'localhost' Identified by 'Pass12_12';
+REVOKE ALL PRIVILEGES ON Taquilla.* FROM 'user'@'localhost';
+GRANT SELECT ON Taquilla.vista_Usuario TO 'user'@'localhost';
 
+
+
+CREATE VIEW vista_Usuario AS
 SELECT P.*
 FROM Pertenecen P
 LEFT JOIN Venta V ON
