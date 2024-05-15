@@ -28,8 +28,6 @@ CALL AnularReserva(286, 'F1C1', 'Grada1', 'Annie', 'Musical', 'Martin Charnin','
 CALL AnularReserva(286, 'F1C2', 'Grada1', 'Annie', 'Musical', 'Martin Charnin','Recinto1', '2024-01-10 00:00:00');
 CALL TotalRecaudadoPorEspectaculo();
 
-CALL CambiarEstadoEventos();
-
 -- Ver que entradas tienes comprado
 CALL VerEntradasCompradasPorCliente(286);
 -- Ver que Espectáculos hay en el Recinto1 a una determinada fecha
