@@ -50,7 +50,8 @@ EXPLAIN SELECT * FROM Ofertas WHERE UsuarioTipo = 'Infantil' AND LocalidadGrada 
 --  Eliminar indice
 ALTER TABLE Permite DROP FOREIGN KEY Permite_ibfk_2;
 DROP INDEX idx_permite_espectaculo ON Permite;
-ALTER TABLE Permite ADD CONSTRAINT Permite_ibfk_2 FOREIGN KEY (EspectaculoTitulo, EspectaculoTipo, EspectaculoProductor) REFERENCES Espectaculo (Titulo, Tipo, Productor);
+ALTER TABLE Permite ADD CONSTRAINT Permite_ibfk_2 FOREIGN KEY (EspectaculoTitulo, EspectaculoTipo, EspectaculoProductor)
+REFERENCES Espectaculo (Titulo, Tipo, Productor);
 
 --  Probar rendimiento de los indices
 EXPLAIN SELECT * FROM Permite WHERE UsuarioTipo = 'Infantil';
