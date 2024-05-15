@@ -1,5 +1,6 @@
 -- Probar Comprar_localidad
 DELETE FROM Venta;
+SELECT * FROM Venta;
 -- 1º Un caso que funcione
 CALL comprar_localidad(286, 'F1C1', 'Grada1', 'Adulto', 'Annie', 'Musical', 'Martin Charnin','Recinto1', '2024-01-10 00:00:00', 'Pago');
 -- 2º Probamos la misma localidad pero otro tipo de usuario
