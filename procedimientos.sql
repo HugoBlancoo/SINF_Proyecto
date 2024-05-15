@@ -383,3 +383,72 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `CambiarEstadoEventos`;
 
+
+-- Espectaculos por Recinto y Fecha
+DROP PROCEDURE IF EXISTS VerEspectaculosEnRecinto;
+
+DELIMITER //
+
+CREATE PROCEDURE VerEspectaculosEnRecinto(
+    IN p_recintoNombre VARCHAR(50),
+    IN p_fecha TIMESTAMP
+)
+BEGIN
+    SELECT 
+        EspectaculoTitulo AS Título,
+        EspectaculoTipo AS Tipo,
+        EspectaculoProductor AS Productor
+    FROM 
+        Realiza
+    WHERE 
+        RecintoNombre = p_recintoNombre AND RecintoFecha = p_fecha;
+END //
+
+DELIMITER ;
+
+-- Que espectaculos hay disponibles para un tipo de usuario
+DROP PROCEDURE IF EXISTS VerEspectaculosPorTipoUsuario;
+
+DELIMITER //
+
+CREATE PROCEDURE VerEspectaculosPorTipoUsuario(
+    IN p_usuarioTipo ENUM('Infantil', 'Jubilado', 'Adulto', 'Parado')
+)
+BEGIN
+    SELECT 
+        EspectaculoTitulo AS Título,
+        EspectaculoTipo AS Tipo,
+        EspectaculoProductor AS Productor
+    FROM 
+        Permite
+    WHERE 
+        UsuarioTipo = p_usuarioTipo;
+END //
+
+DELIMITER ;
+
+-- Entradas compradas por un cliente
+DROP PROCEDURE IF EXISTS VerEntradasCompradasPorCliente;
+DELIMITER //
+
+CREATE PROCEDURE VerEntradasCompradasPorCliente(
+    IN p_numeroVisa INT
+)
+BEGIN
+    SELECT 
+        LocalidadUbicacion AS Localidad,
+        LocalidadGrada AS Grada,
+        P_OfertaUsuarioTipo AS Usuario,
+        P_RealizaRecintoFecha AS Fecha,
+        P_RealizaRecintoNombre AS Recinto,
+        P_RealizaEspectaculoTitulo AS Título,
+        P_RealizaEspectaculoTipo AS Título,
+        P_RealizaEspectaculoProductor AS Título
+    FROM 
+        Venta
+    WHERE 
+        ClienteNumero_Visa = p_numeroVisa;
+END //
+
+DELIMITER ;
+
